@@ -2,31 +2,44 @@
 title: "Multivariate Analysis Chapter 1 - 3"
 author: "Oktsa Dwika R"
 date: '2023-08-20'
-output: html_document
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-CHAPTER 1
+# **CHAPTER 1**
 
-A. Vectors and Matrices
-The computation:
-```
+## **A. Vectors and Matrices**
+
+**The computation:**
+
+```         
 X = matrix(c(), nrow, ncol)
 ```
-Explaination:
-- c() is used to input the elements of the matrix
-- nrow = the number of rows from the matrix, ex: 1, 2, 3, etc
-- ncol = the number of columns from the matrix, ex: 1, 2, 3, etc
-So, the size of the matrix is nrow x ncol.
 
-Example:
+**Explaination:**
+
+-   c() is used to input the elements of the matrix
+
+-   nrow = the number of rows from the matrix, ex: 1, 2, 3, etc
+
+-   ncol = the number of columns from the matrix, ex: 1, 2, 3, etc
+
+    So, the size of the matrix is nrow x ncol.
+
+**Example:**
+
 ```{r}
 X = matrix(c(2,3,7,4),4,1)
 X
 ```
 
-B. Expectation
-1. Using Manual Way
-```
+## **B. Expectation**
+
+### **1. Using Manual Way**
+
+```         
 # Input Part
 X = c()
 prob = c()
@@ -34,23 +47,30 @@ prob = c()
 # Computation Part
 Exp_X = X %*% prob
 ```
-Explaination:
-- X = the value of the vector X
-- prob = probability function of X
 
-Example:
+**Explaination:**
+
+-   X = the value of the vector X
+
+-   prob = probability function of X
+
+**Example:**
+
 ```{r}
 X = c(-1,0,1)
 X
 prob = c(0.3,0.3,0.4)
 prob
 ```
+
 ```{r}
 Exp_X = X%*%prob
 Exp_X
 ```
-2. Using Function
-```
+
+### 2. Using Function
+
+```         
 # Input Part
 vals = c()
 probs = c()
@@ -58,19 +78,26 @@ probs = c()
 # calculate expected value
 weighted.mean(vals, probs)
 ```
-Explaination:
-- vals = the value of data or observation
-- probs = probability function of observation
 
-Example:
+**Explaination:**
+
+-   vals = the value of data or observation
+
+-   probs = probability function of observation
+
+**Example:**
+
 ```{r}
 vals = c(-1,0,1)
 probs = c(0.3,0.3,0.4)
 weighted.mean(vals, probs)
 ```
-C. Covariance Matrix
-The computation:
-```
+
+## **C. Covariance Matrix**
+
+**The computation:**
+
+```         
 # Input Part
 data = data.frame(V1 = c()
                   V2 = c()
@@ -80,11 +107,15 @@ data = data.frame(V1 = c()
 # Computation Part
 cov(data)
 ```
-Explaination:
-- data = data frame
-- Vi = the value of variable i, where i = 1,2,...,n
 
-Example:
+**Explaination:**
+
+-   data = data frame
+
+-   Vi = the value of variable i, where i = 1,2,...,n
+
+**Example:**
+
 ```{r}
 data = data.frame(V1 = c(84, 82, 81, 89, 73, 94, 92, 70, 88, 95),
                   V2 = c(85, 82, 72, 77, 75, 89, 95, 84, 77, 94),
@@ -92,10 +123,13 @@ data = data.frame(V1 = c(84, 82, 81, 89, 73, 94, 92, 70, 88, 95),
 
 cov(data)
 ```
-D. Mean Vector and Covariance Matrix for Linear Combination of Random Variables
-In general, consider the q linear combinations of the p random variables 1,2,...,p.
-The computation:
-```
+
+## **D. Mean Vector and Covariance Matrix for Linear Combination of Random Variables**
+
+In general, consider the q linear combinations of the p random variables
+1,2,...,p. The computation:
+
+```         
 # Input Part
 mu = matrix(c(),,)
 sigma = matrix(c(),,)
@@ -108,14 +142,21 @@ MuZ
 SigZ = C%*%sigma%*%t(C)
 SigZ
 ```
-Explaination:
-- mu = the expectation or mean vector
-- sigma = the covariance matrix
-- C = the combination matrix
-- MuZ = the mean vector for Linear Combination
-- SIgZ = the covariance matrix for Linear Combination
 
-Example:
+**Explaination:**
+
+-   mu = the expectation or mean vector
+
+-   sigma = the covariance matrix
+
+-   C = the combination matrix
+
+-   MuZ = the mean vector for Linear Combination
+
+-   SigZ = the covariance matrix for Linear Combination
+
+**Example:**
+
 ```{r}
 mu = matrix(c(2,3,-1,5),4,1)
 sigma = matrix(c(11,-8,3,9,-8,9,-3,-6,3,-3,2,3,9,6,3,9),4,4)
@@ -129,16 +170,20 @@ SigZ = C%*%sigma%*%t(C)
 paste("so the covariance matrix for linear combination is")
 SigZ
 ```
-E. Data Manipulation
+
+## **E. Data Manipulation**
+
 For data manipulation, we will use 'dplyr' and 'tidyverse' packages.
+
 ```{r}
 # Installing the package
-install.packages(c('dplyr','tidyverse'))  
 library('dplyr')
 library('tidyverse')
 ```
+
 Create Data Frame for the data that will be manipulated.
-```
+
+```         
 # Input Part
 df1 = data.frame((V1 = c()
                   V2 = c()
@@ -150,85 +195,119 @@ df2 = data.frame((V1 = c()
                   Vn = c())
 )
 ```
-1. Inner Join Function
-```
+
+1.  **Inner Join Function**
+
+```         
 # Computation Part
 df_ij = inner_join(df1, df2, by = " ")
 df_ij
 ```
-Explaination :Merge 2 dataframe by variable inside " ", then the output will show only for the same value of variable inside " "
 
-2. Left Join using Inner Join
-```
+**Explaination :**
+
+Merge 2 dataframe by variable inside " ", then the output will show only
+for the same value of variable inside" "
+
+2.  **Left Join using Inner Join**
+
+```         
 # Computation Part
 df_ij2= df1 %>% inner_join(df2,by=" ")
 df_ij2
 ```
-3. Outer Join
-```
+
+3.  **Outer Join**
+
+```         
 # Computation Part
 df_U = full_join(df1,df2,by = "")
 df_U
 ```
-Explaination:
-Merge 2 dataframe by variable inside " ", then the output will show all of the data and the missing data will show NA.
 
-4. Left Join
-```
+**Explaination:**
+
+Merge 2 dataframe by variable inside " ", then the output will show all
+of the data and the missing data will show NA.
+
+4.  **Left Join**
+
+```         
 # Computation Part
 df_L = left_join(df1, df2, by=" ")
 df_L
 ```
-Explaination:Combine right table (df2) to the left table (df1) by variable inside " " from the left table (df1)
 
-5. Right Join
-```
+**Explaination:**
+
+Combine right table (df2) to the left table (df1) by variable inside " "
+from the left table (df1)
+
+5.  **Right Join**
+
+```         
 # Computation Part
 df_R = right_join(df1, df2, by=" ")
 df_R
 ```
-Explaination:Combine left table (df1) to the right table (df2) by variable inside " " from the right table (df2).
 
-Example:
+**Explaination:**
+
+Combine left table (df1) to the right table (df2) by variable inside " "
+from the right table (df2).
+
+**Example 1- 5:**
+
 ```{r}
 # Input part
 df1=data.frame(CustomerId=c(1:6),Product=c("Oven","Television","Mobile","WashingMachine","Lightings","Ipad"),NumbProduct=c(10,5,16,2,22,7))
+df1
+
 df2=data.frame(CustomerId=c(2,4,6,7,8),State=c("California","Newyork","Santiago","Texas","Indiana"))
+df2
 ```
+
 ```{r}
 # Inner Join Function
 df_ij=inner_join(df1,df2,by="CustomerId") 
 df_ij
 ```
+
 ```{r}
 # Left Join using Inner Join
 df_ij2= df1 %>% inner_join(df2,by="CustomerId")
 df_ij2
 ```
+
 ```{r}
 # Outer Join
 df_U = full_join(df1,df2,by="CustomerId")
 df_U
 ```
+
 ```{r}
 # Left Join
 df_L = left_join(df1, df2, by="CustomerId")
 df_L
 ```
+
 ```{r}
 # Right Join
 df_R = right_join(df1, df2, by="CustomerId")
 df_R
 ```
-6. Check Information of data
+
+6.  **Check Information of data**
+
 ```{r}
 # Computation Part
 df_U %>% glimpse()
 glimpse(df_U)
-df1 %>% full_join(df2, by=" ") %>% glimpse()
+df1 %>% full_join(df2, by="CustomerId") %>% glimpse()
 ```
 
-7. Check missing data for each column
+7.  **Check missing data for each column**
+
 ```{r}
 results = apply(is.na(df_U),2,which)
 results
@@ -236,54 +315,74 @@ results
 results2 = apply(is.na(df_L),2,which)
 results2
 ```
-Explainatuon : is.na to check missing value, 2 means we check the column. if we use 1, means we check the row
 
-8. Filter out the missing values by drop_na
+**Explainatuon :**
+
+is.na to check missing value, 2 means we check the column. if we use 1,
+means we check the row
+
+8.  **Filter out the missing values by drop_na**
+
 ```{r}
 df_UC = drop_na(df_U)
 df_UC
 ```
 
+# **CHAPTER 2**
 
-CHAPTER 2
+## **DATA EXPLORING**
 
-DATA EXPLORING
+**Data Exploration by DataExplorer package**
 
-Data Exploration by DataExplorer package
 ```{r}
-install.packages('DataExplorer')
 library('DataExplorer')
 ```
-1. Importing data
-```
+
+1.  **Importing data**
+
+```         
 # Import Data
 file = ''
 data = read.csv(file)
 ```
-Explaination :
-file = '' is for the location of the data in the device.
 
+**Explaination :**
 
-2. Check the information about the data
+file = ' ' is for the location of the data in the device.
+
+**Example:**
+
+```{r}
+
+data = read.csv("C:/Users/Avita/Documents/Multivariate-Analysis/Data/CreditApproval.csv", header = TRUE)
+
+head(data)
+```
+
+2.  **Check the information about the data**
+
 ```{r}
 introduce(data)
 miss_val = apply(is.na(data),2,which)
 miss_val
 ```
-3. Check the % of missing value for each variable
+
+3.  **Check the % of missing value for each variable**
+
 ```{r}
 plot_missing(data)
 ```
 
-4. Filter out the missing value
+4.  **Filter out the missing value**
+
 ```{r}
-library('tidyverse')
 dataC = drop_na(data)
 introduce(dataC)
 ```
 
-5. Plotting the data
-```{r}
+5.  **Plotting the data**
+
+```         
 # Bar Plot
 plot_bar(data[,c()])
 
@@ -296,25 +395,41 @@ plot_histogram(data$var)
 plot_histogram(data[,''])
 ```
 
-6. Descriptive Statistics for each variable
+**Example**
+
+```{r}
+# Bar Plot
+plot_bar(data[,c('A1','A4','A5')])
+
+# Scatter Plot
+plot_scatterplot(data[,c('A2','A3')],by ='A2')
+
+# Histogram Plot
+plot_histogram(data$A2)
+# or
+plot_histogram(data[,'A2'])
+```
+
+6.  **Descriptive Statistics for each variable**
+
 ```{r}
 summary(data)
 ```
 
+## **MULTIVARIATE NORMAL DISTRIUBUTION**
 
-MULTIVARIATE NORMAL DISTRIUBUTION
-A. Simulating Multivariate Normal Distribution
+### **A. Simulating Multivariate Normal Distribution**
+
 ```{r}
 # Installing Packages
-install.packages('MASS')
-install.packages('ggplot2')
-install.packages('MVN')
 library(MASS)
 library(ggplot2)
 library(MVN)
 ```
+
 Here is the computation for simulating multivariate distribution
-```{r}
+
+```         
 # Input Part
 n = 
 mu = 
@@ -325,13 +440,17 @@ empirical =
 # Computation Part
 data = mvrnorm(n,mu,sigma)
 ```
-Explaination:
-Ref: https://www.rdocumentation.org/packages/rockchalk/versions/1.8.110/topics/mvrnorm 
-- n =>  a number of samples.   
-- mu => a mean vector of variables.
-- sigma => a covariance matrix.
 
-Example:
+**Explaination:**
+
+-   Ref:<https://www.rdocumentation.org/packages/rockchalk/versions/1.8.110/topics/mvrnorm>
+
+-   n =\> a number of samples.
+
+-   mu =\> a mean vector of variables. - sigma =\> a covariance matrix.
+
+**Example:**
+
 ```{r}
 n = 10
 mu = c(0,0)
@@ -341,10 +460,12 @@ set.seed(1)
 data = mvrnorm(n,mu,sigma)
 data
 ```
-B. Normality Test for multivariate variables using 'energy' Test
-H0: data is multivariate normal distribution
-vs H1: data is not multivariate normal distribution
-For conclusion, we will reject H0 if p-value < 0.05
+
+### B. Normality Test for multivariate variables using 'energy' 
+
+Test H0: data is multivariate normal distribution vs H1: data is not
+multivariate normal distribution For conclusion, we will reject H0 if
+p-value \< 0.05
 
 ```{r}
 # computation part
@@ -357,16 +478,19 @@ results_U = mvn(data, mvnTest = 'energy', univariatePlot = 'qqplot')
 results_U
 ```
 
+# CHAPTER 3
 
-CHAPTER 3
+## A. ONE SAMPLE T-TEST 
 
-A. ONE SAMPLE T-TEST
-1. Hypothesis testing : Hotelling's T Square
+### 1. Hypothesis testing : Hotelling's T Square 
+
 H0 : Mu = Mu0 vs H1 : Mu =/ Mu0
-1.1 Hotelling's T square Manual
-```{r}
+
+#### **1.1 Hotelling's T square Manual**
+
+```
 # Input Part
-Xbar=matrix(c(),,)
+Xbar = matrix(c(),,)
 S = matrix(c(),,)
 mu = matrix(c(),,)
 n = 
@@ -396,16 +520,25 @@ if(T2 < T2_cri){
 }
 
 ```
-Explaination:
-- Xbar = mean of the sample
-- mu = plausible value for the population mean
-- S = covariance matrix
-- n = number of sample
-- p = number of variable
-- alfa = significant level
-- n_p = number of sample - number of variable
 
-Example 3.1:
+**Explaination:**
+
+-   Xbar = mean of the sample
+
+-   mu = plausible value for the population mean
+
+-   S = covariance matrix
+
+-   n = number of sample
+
+-   p = number of variable
+
+-   alfa = significant level
+
+-   n_p = number of sample - number of variable
+
+**Example 3.1:**
+
 ```{r}
 # Input Part
 Xbar = matrix(c(4.64,45.4,9.965),3,1)
@@ -438,19 +571,20 @@ if(T2 < T2_cri){
 }
 
 ```
-1.2 Hotelling's Testing using packages
-Installing the package:
+
+#### 1.2 Hotelling's Testing using packages Installing the package:
+
 ```{r}
-install.packages("MASS")
-install.packages("DescTools")
 library(DescTools)
 library(MASS)
 ```
-The computation:
-```{r}
+
+**The computation:**
+
+```
 # Input Part
-x=matrix(c(),,)
-mu0=c()
+x = matrix(c(),,)
+mu0 = c()
 
 # Computation Part
 ## Hotelling's T2 Test using F distribution
@@ -458,11 +592,15 @@ HotellingsT2Test(x,mu=mu0)
 ## Hotelling's T2 Test using Chi-squared distribution
 HotellingsT2Test(x,mu=mu0,test="chi")
 ```
-Explaination:
-x = a numeric dataframe or matrix
-mu0 = plausible value for the population mean
 
-Example 3.2:
+**Explaination:**
+
+-   x = a numeric dataframe or matrix
+
+-   mu0 = plausible value for the population mean
+
+**Example 3.2:**
+
 ```{r}
 # Input Part
 x=matrix(c(6,10,8,9,6,3),3,2)
@@ -476,9 +614,14 @@ HotellingsT2Test(x,mu=mu0)
 HotellingsT2Test(x,mu=mu0,test="chi")
 
 ```
-2. Confidence Regions and Simultaneous Comparisons of Component Means
-2.1 The 100(1-alfa)% Simultaneous T2 Intervals for the two components means
-```{r}
+
+### **2.  Confidence Regions and Simultaneous Comparisons of Component Means** 
+
+#### **2.1 The 100(1-alfa)% Simultaneous T2 Intervals for the two components means**
+
+**The computation:**
+
+```
 # Input Part
 Xbar=matrix(c(),,)
 S = matrix(c(),,)
@@ -494,7 +637,8 @@ U1=Xbar[1,1]+(sqrt(((n-1)*p)/(n-p)*qf(df1,p,n_p))*sqrt(S[1,1]/n))
 paste("The lower bound L1 : ",L1,"/ The upper bound U1 : ",U1)
 ```
 
-Example 3.3:
+**Example 3.3:**
+
 ```{r}
 # Input Part
 Xbar = matrix(c(4.64,45.4,9.965),3,1)
@@ -510,8 +654,12 @@ L1=Xbar[1,1]-(sqrt(((n-1)*p)/(n-p)*qf(df1,p,n_p))*sqrt(S[1,1]/n))
 U1=Xbar[1,1]+(sqrt(((n-1)*p)/(n-p)*qf(df1,p,n_p))*sqrt(S[1,1]/n))
 paste("The lower bound L1 : ",L1,"/ The upper bound U1 : ",U1)
 ```
-2.2 The simultaneous 100(1-alfa)% Bonferroni Confidence interval
-```{r}
+
+#### 2.2 The simultaneous 100(1-alfa)% Bonferroni Confidence interval
+
+**The Computation:**
+
+```
 # Input Part
 Xbar=matrix(c(),,)
 S = matrix(c(),,)
@@ -526,7 +674,9 @@ L_1=Xbar[1,1]-((qt(df1,df2))*sqrt(S[1,1]/n))
 U_1=Xbar[1,1]+((qt(df1,df2))*sqrt(S[1,1]/n))
 paste("The lower bound L1 : ",L_1,"/ The upper bound U1 : ",U_1)
 ```
-Example 3.4:
+
+**Example 3.4:**
+
 ```{r}
 # Input Part
 Xbar = matrix(c(4.64,45.4,9.965),3,1)
@@ -543,16 +693,19 @@ U_1=Xbar[1,1]+((qt(df1,df2))*sqrt(S[1,1]/n))
 paste("The lower bound L1 : ",L_1,"/ The upper bound U1 : ",U_1)
 ```
 
-B. COMPARING MEAN VECTORS FROM TWO INDEPENDENT POPULATIONS
-1. Assumption Testing - Homogeneity of covariance matrices
-1.1 Using Package
-Installing package
+## B. COMPARING MEAN VECTORS FROM TWO INDEPENDENT POPULATIONS 
+
+### 1. Assumption Testing - Homogeneity of covariance matrices 
+
+#### 1.1 Using Package Installing package
+
 ```{r}
-install.packages("biotools")
 library(biotools)
 ```
-Homogeneity Testing
-```{r}
+
+**The computation:**
+
+```
 # Input Part
 ## Sample 1
 vecmu1 = matrix(c(),,)
@@ -585,7 +738,9 @@ sample_merge
 results = boxM(data=sample_merge,group=c1)
 results
 ```
-Example:
+
+**Example:**
+
 ```{r}
 # Input Part
 ## Sample 1
@@ -620,10 +775,13 @@ results = boxM(data=sample_merge,group=c1)
 results
 ```
 
-1.2 Manual Way
-1.2.1 X2 Approximation
-The Computation
-```{r}
+#### 1.2 Manual Way 
+
+##### 1.2.1 X2 Approximation The Computation
+
+**The computation**
+
+```
 # Input Part
 S1 = matrix(c(),,)
 S2 = matrix(c(),,)
@@ -657,7 +815,9 @@ if(U < cri_val){
     paste("Since U =", U, " > critical value = ", cri_val,", then reject H0.")
 }
 ```
-Example
+
+**Example:**
+
 ```{r}
 # Input Part
 S1 = matrix(c(2,1,1,6),2,2)
@@ -693,8 +853,44 @@ if(U < cri_val){
 }
 ```
 
-1.2.2 F Approximation
-The Computation (continuity from X2 Approximation):
+##### 1.2.2 F Approximation The Computation (continuity from X2 Approximation):
+
+**The computation:**
+
+```
+# Computation Part
+c2 = ((1/v1^2)+(1/v2^2)-(1/(v1+v2)^2))*(((p-1)*(p+2))/(6*(g-1)))
+paste("c1: ",c1)
+a1 = 1/2*(g-1)*p*(p+1)
+a2 = (a1+2)/abs(c2-c1^2)
+b1 = (1-c1-(a1/a2))/a1
+b2 = (1-c1+(2/a2))/a2
+
+if(c2 > c1^2){
+    F = -2*b1*lnM
+}else if(c2 < c1^2){
+    F = (-2*a2*b2*lnM)/(a1*(1+(2*b2*lnM)))
+}else{
+    F = NULL
+}
+cri_val = qf(df1,a1,a2)
+
+# Conclusion
+if(is.null (F)==0){
+    if(F<cri_val){
+        paste("Since F =", F, " < critical value = ", cri_val,", then do not reject H0.")
+    }else if(F==cri_val){
+        paste("Since F =", F, " = critical value = ", cri_val,", then do not reject H0.")
+    }else{
+        paste("Since F =", F, " > critical value = ", cri_val,", then reject H0.")
+    }
+}else{
+    print("we cannot conclude the distribution of F.")
+}
+```
+
+**Continuity example 3.10:**
+
 ```{r}
 # Computation Part
 c2 = ((1/v1^2)+(1/v2^2)-(1/(v1+v2)^2))*(((p-1)*(p+2))/(6*(g-1)))
@@ -727,42 +923,13 @@ if(is.null (F)==0){
 }
 ```
 
-Continuity example 3.10
-```{r}
-# Computation Part
-c2 = ((1/v1^2)+(1/v2^2)-(1/(v1+v2)^2))*(((p-1)*(p+2))/(6*(g-1)))
-paste("c1: ",c1)
-a1 = 1/2*(g-1)*p*(p+1)
-a2 = (a1+2)/abs(c2-c1^2)
-b1 = (1-c1-(a1/a2))/a1
-b2 = (1-c1+(2/a2))/a2
+### 2.  Two Sample when Sigma1=Sigma2 
 
-if(c2 > c1^2){
-    F = -2*b1*lnM
-}else if(c2 < c1^2){
-    F = (-2*a2*b2*lnM)/(a1*(1+(2*b2*lnM)))
-}else{
-    F = NULL
-}
-cri_val = qf(df1,a1,a2)
+#### 2.1 Hotelling's Testing Manual Computation
 
-# Conclusion
-if(is.null (F)==0){
-    if(F<cri_val){
-        paste("Since F =", F, " < critical value = ", cri_val,", then do not reject H0.")
-    }else if(F==cri_val){
-        paste("Since F =", F, " = critical value = ", cri_val,", then do not reject H0.")
-    }else{
-        paste("Since F =", F, " > critical value = ", cri_val,", then reject H0.")
-    }
-}else{
-    print("we cannot conclude the distribution of F.")
-}
+**The computation**
+
 ```
-
-2. Two Sample when Sigma1=Sigma2
-2.1 Hotelling's Testing Manual Computation
-```{r}
 # Input Part
 s1=matrix(c(),,)
 s2=matrix(c(),,)
@@ -798,7 +965,8 @@ if(T2 < cri_val){
 }
 ```
 
-Example 3.5:
+**Example 3.5:**
+
 ```{r}
 # Input Part
 s1=matrix(c(2,1,1,6),2,2)
@@ -835,17 +1003,19 @@ if(T2 < cri_val){
 }
 ```
 
-2.2 Hypothesis Testing Using Package
-Installing the package
+#### 2.2 Hypothesis Testing Using Package Installing the package
+
 ```{r}
-install.packages("corpcor")
-install.packages("Hotelling")
 library(corpcor)
 library(Hotelling)
 ```
 
-Simulate 2 samples from two independent samples with common covariance matrix
-```{r}
+Simulate 2 samples from two independent samples with common covariance
+matrix.
+
+**The computation:**
+
+```
 # Input Part
 ## Sample 1
 vecmu1 = matrix(c(),,)
@@ -866,12 +1036,18 @@ head(sample2)
 Htest1 = hotelling.test(sample1,sample2,var.equal=TRUE)
 Htest1
 ```
-Explaination:
-- sample1 = matrix containing data points from sample 1
-- sample2 = matrix containing data points from sample 2
-- var.equal = assumption of the variance, TRUE if equal and FALSE if not equal
 
-Example:
+**Explaination:**
+
+-   sample1 = matrix containing data points from sample 1
+
+-   sample2 = matrix containing data points from sample 2
+
+-   var.equal = assumption of the variance, TRUE if equal and FALSE if
+    not equal
+
+**Example:**
+
 ```{r}
 # Input Part
 ## Sample 1
@@ -894,8 +1070,11 @@ Htest1 = hotelling.test(sample1,sample2,var.equal=TRUE)
 Htest1
 ```
 
-2.3 The 100(1-alfa)% simultaneous confidence intervals
-```{r}
+#### 2.3 The 100(1-alfa)% simultaneous confidence intervals
+
+**The computation:**
+
+```
 # Input Part
 xbar1 = matrix(c(),,)
 xbar2 = matrix(c(),,)
@@ -914,7 +1093,9 @@ paste("The lower bound L1: ",L1)
 U1=(xbar1[1,1]-Xbar2[1,1])+(sqrt(c2)*sqrt(((1/n1)+(1/n2))*Sp[1,1]))
 paste("The upper bound U1: ",U1)
 ```
-Example 3.6:
+
+**Example 3.6:**
+
 ```{r}
 # Input Part
 s1=matrix(c(2,1,1,6),2,2)
@@ -938,8 +1119,11 @@ U1=(xbar1[1,1]-xbar2[1,1])+(sqrt(c2)*sqrt(((1/n1)+(1/n2))*Sp[1,1]))
 paste("The upper bound U1: ",U1)
 ```
 
-2.4 The Bonferroni Confidence Interval
-```{r}
+#### 2.4 The Bonferroni Confidence Interval
+
+**The computation**
+
+```
 # Input Part
 s1=matrix(c(),,)
 s2=matrix(c(),,)
@@ -960,7 +1144,8 @@ U1 = (xbar1[1,1]-xbar2[1,1])+(qt(df1,df2)*sqrt(((1/n1)+(1/n2))*Sp[1,1]))
 paste("The lower bound U1: ",U1)
 ```
 
-Example 3.7:
+**Example 3.7:**
+
 ```{r}
 # Input Part
 s1=matrix(c(2,1,1,6),2,2)
@@ -982,9 +1167,13 @@ U1 = (xbar1[1,1]-xbar2[1,1])+(qt(df1,df2)*sqrt(((1/n1)+(1/n2))*Sp[1,1]))
 paste("The lower bound U1: ",U1)
 ```
 
-3. Two Sample when Sigma1=/Sigma2
-3.1 Hotelling's Testing Manual Computation
-```{r}
+### 3.  Two Sample when Sigma1=/Sigma2 
+
+#### 3.1 Hotelling's Testing Manual Computation
+
+**The computation**
+
+```
 # Input Part
 s1=matrix(c(),,)
 s2=matrix(c(),,)
@@ -1018,7 +1207,8 @@ if(stat_val < cri_val){
 }
 ```
 
-Example 3.8:
+**Example 3.8:**
+
 ```{r}
 # Input Part
 s1= matrix(c(13825.3,23823.4,23823.4,73107.4),2,2)
@@ -1053,17 +1243,17 @@ if(stat_val < cri_val){
 }
 ```
 
-3.2 Hypothesis Testing Using Package
-Installing the package
+#### 3.2 Hypothesis Testing Using Package Installing the package
+
 ```{r}
-install.packages("corpcor")
-install.packages("Hotelling")
 library(corpcor)
 library(Hotelling)
 ```
 
-Simulate 2 samples from two independent samples with common covariance matrix
-```{r}
+Simulate 2 samples from two independent samples with common covariance
+matrix
+
+```
 # Input Part
 ## Sample 1
 vecmu1 = matrix(c(),,)
@@ -1084,12 +1274,18 @@ head(sample2)
 Htest2 = hotelling.test(sample1,sample2,var.equal=FALSE)
 Htest2
 ```
-Explaination:
-- sample1 = matrix containing data points from sample 1
-- sample2 = matrix containing data points from sample 2
-- var.equal = assumption of the variance, TRUE if equal and FALSE if not equal
 
-Example:
+**Explaination:**
+
+-   sample1 = matrix containing data points from sample 1
+
+-   sample2 = matrix containing data points from sample 2
+
+-   var.equal = assumption of the variance, TRUE if equal and FALSE if
+    not equal
+
+**Example:**
+
 ```{r}
 # Input Part
 ## Sample 1
@@ -1111,18 +1307,22 @@ head(sample2)
 Htest2 = hotelling.test(sample1,sample2,var.equal=FALSE)
 Htest2
 ```
-Note : The calculation for simultaneous confidence intervals is the same with two sample independent sample (sigma1=sigma2)
 
+Note : The calculation for simultaneous confidence intervals is the same
+with two sample independent sample (sigma1=sigma2)
 
-C. PAIRED COMPARISON
-1.1 Hypothesis Testing Paired Comparison - 2 Dependent Sample Using Package
+## C. PAIRED COMPARISON 
+
+### 1.1 Hypothesis Testing Paired Comparison - 2 Dependent Sample Using Package
+
 ```{r}
 # Install Package
-install.packages("DescTools")
 library(DescTools)
 ```
 
-```{r}
+**The Computation**
+
+```
 # Input Part
 data1= matrix(c(),,)
 data2= matrix(c(),,)
@@ -1132,7 +1332,9 @@ muH0 = c()
 # Computation Part
 Htest = HotellingsT2Test(diff, mu=muH0)
 ```
-Example:
+
+**Example:**
+
 ```{r}
 # Input Part
 data1= matrix(c(6,6,18,8,11,34,28,71,43,33,20,27,23,64,44,30,75,26,124,54,30,14),11,2)
@@ -1145,8 +1347,11 @@ Htest = HotellingsT2Test(diff, mu=muH0)
 Htest
 ```
 
-1.2 Hypothesis Testing Paired Comparison - 2 Dependent Sample Manual Way
-```{r}
+### 1.2 Hypothesis Testing Paired Comparison - 2 Dependent Sample Manual Way
+
+**The computation**
+
+```
 # Input Part
 x1 = matrix(c(),,)
 x2 = matrix(c(),,)
@@ -1181,7 +1386,9 @@ if(T2 < cri_val){
       "so we reject H0 at the significant level", alfa)
 }
 ```
-Example:
+
+**Example:**
+
 ```{r}
 # Input Part
 x1 = matrix(c(6,6,18,8,11,34,28,71,43,33,20,27,23,64,44,30,75,26,124,54,30,14),11,2)
@@ -1217,8 +1424,12 @@ if(T2 < cri_val){
       "so we reject H0 at the significant level", alfa)
 }
 ```
-1.3 The 100(1-alfa)% Confidence Interval
-```{r}
+
+### 1.3 The 100(1-alfa)% Confidence Interval
+
+**The computation:**
+
+```
 # Input Part
 x1 = matrix(c(),,)
 x2 = matrix(c(),,)
@@ -1238,7 +1449,9 @@ paste("The lower bound L1: ",L1)
 U1 = dbar[1,1]+(sqrt(((n-1)*p/(n-p))*qf(df1,p,df2))*sqrt(sd[1,1]/n))
 paste("The Upper bound U1: ",U1)
 ```
-Example:
+
+**Example:**
+
 ```{r}
 # Input Part
 x1 = matrix(c(6,6,18,8,11,34,28,71,43,33,20,27,23,64,44,30,75,26,124,54,30,14),11,2)
@@ -1260,8 +1473,11 @@ U1 = dbar[1,1]+(sqrt(((n-1)*p/(n-p))*qf(df1,p,df2))*sqrt(sd[1,1]/n))
 paste("The Upper bound U1: ",U1)
 ```
 
-1.4 The 100(1-alfa)% Bonfferoni Confidence Interval
-```{r}
+### 1.4 The 100(1-alfa)% Bonfferoni Confidence Interval
+
+**The Computation**
+
+```
 # Input Part
 x1 = matrix(c(),,)
 x2 = matrix(c(),,)
@@ -1282,7 +1498,9 @@ paste("The lower bound L1: ",L1)
 U1 = dbar[1,1]+(qt(df1,df2)*sqrt(sd[1,1]/n))
 paste("The lower bound U1: ",U1)
 ```
-Example:
+
+**Example:**
+
 ```{r}
 # Input Part
 x1 = matrix(c(6,6,18,8,11,34,28,71,43,33,20,27,23,64,44,30,75,26,124,54,30,14),11,2)
@@ -1303,4 +1521,8 @@ paste("The lower bound L1: ",L1)
 
 U1 = dbar[1,1]+(qt(df1,df2)*sqrt(sd[1,1]/n))
 paste("The lower bound U1: ",U1)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
