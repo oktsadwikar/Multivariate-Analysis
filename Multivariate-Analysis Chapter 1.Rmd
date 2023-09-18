@@ -1,0 +1,321 @@
+---
+title: "Multivariate-Analysis Chapter 1"
+author: "Oktsa Dwika Rahmashari"
+date: '2023-09-18'
+output: github_document
+---
+
+**CHAPTER 1**
+
+**A. Vectors and Matrices**
+
+The computation:
+
+```         
+X = matrix(c(), nrow, ncol)
+```
+
+Explaination:
+
+-   c() is used to input the elements of the matrix
+
+-   nrow = the number of rows from the matrix, ex: 1, 2, 3, etc
+
+-   ncol = the number of columns from the matrix, ex: 1, 2, 3, etc.
+
+So, the size of the matrix is nrow x ncol.
+
+**Example:**
+
+```{r}
+X = matrix(c(2,3,7,4),4,1)
+X
+```
+
+**B. Expectation**
+
+1.  **Using Manual Way**
+
+```         
+# Input Part
+X = c()
+prob = c()
+
+# Computation Part
+Exp_X = X %*% prob
+```
+
+Explaination:
+
+-   X = the value of the vector X
+
+-   prob = probability function of X
+
+**Example:**
+
+```{r}
+X = c(-1,0,1)
+X
+prob = c(0.3,0.3,0.4)
+prob
+```
+
+```{r}
+Exp_X = X%*%prob
+Exp_X
+```
+
+2.  **Using Function**
+
+```         
+# Input Part
+vals = c()
+probs = c()
+
+# calculate expected value
+weighted.mean(vals, probs)
+```
+
+Explaination:
+
+-   vals = the value of data or observation
+
+-   probs = probability function of observation
+
+**Example:**
+
+```{r}
+vals = c(-1,0,1)
+probs = c(0.3,0.3,0.4)
+weighted.mean(vals, probs)
+```
+
+**C. Covariance Matrix**
+
+The computation:
+
+```         
+# Input Part
+data = data.frame(V1 = c()
+                  V2 = c()
+                  ...
+                  Vn = c())
+
+# Computation Part
+cov(data)
+```
+
+Explaination:
+
+-   data = data frame
+
+-   Vi = the value of variable i, where i = 1,2,...,n
+
+**Example:**
+
+```{r}
+data = data.frame(V1 = c(84, 82, 81, 89, 73, 94, 92, 70, 88, 95),
+                  V2 = c(85, 82, 72, 77, 75, 89, 95, 84, 77, 94),
+                  V3 = c(97, 94, 93, 95, 88, 82, 78, 84, 69, 78))
+
+cov(data)
+```
+
+**D. Mean Vector and Covariance Matrix for Linear Combination of Random
+Variables**
+
+In general, consider the q linear combinations of the p random variables
+1,2,...,p.
+
+The computation:
+
+```         
+# Input Part
+mu = matrix(c(),,)
+sigma = matrix(c(),,)
+C = matrix(c(),,)
+
+# Computation Part
+MuZ = C%*%mu
+MuZ
+
+SigZ = C%*%sigma%*%t(C)
+SigZ
+```
+
+Explaination:
+
+-   mu = the expectation or mean vector
+
+-   sigma = the covariance matrix
+
+-   C = the combination matrix
+
+-   MuZ = the mean vector for Linear Combination
+
+-   SigZ = the covariance matrix for Linear Combination
+
+**Example:**
+
+```{r}
+mu = matrix(c(2,3,-1,5),4,1)
+sigma = matrix(c(11,-8,3,9,-8,9,-3,-6,3,-3,2,3,9,6,3,9),4,4)
+C = matrix(c(3,-1,2,1,-3,-2,-4,1,4,-1,-2,-5),3,4)
+
+MuZ = C%*%mu
+paste("so the mean vector for linear combination is")
+MuZ
+
+SigZ = C%*%sigma%*%t(C)
+paste("so the covariance matrix for linear combination is")
+SigZ
+```
+
+**E. Data Manipulation**
+
+For data manipulation, we will use 'dplyr' and 'tidyverse' packages.
+
+```{r}
+# Installing the package
+library('dplyr')
+library('tidyverse')
+```
+
+Create Data Frame for the data that will be manipulated.
+
+```         
+# Input Part
+df1 = data.frame((V1 = c()
+                  V2 = c()
+                  ...
+                  Vn = c())
+df2 = data.frame((V1 = c()
+                  V2 = c()
+                  ...
+                  Vn = c())
+)
+```
+
+1.  **Inner Join Function**
+
+```         
+# Computation Part
+df_ij = inner_join(df1, df2, by = " ")
+df_ij
+```
+
+Explaination : Merge 2 dataframe by variable inside " ", then the output
+will show only for the same value of variable inside" "
+
+2.  **Left Join using Inner Join**
+
+```         
+# Computation Part
+df_ij2= df1 %>% inner_join(df2,by=" ")
+df_ij2
+```
+
+3.  **Outer Join**
+
+```         
+# Computation Part
+df_U = full_join(df1,df2,by = "")
+df_U
+```
+
+Explaination: Merge 2 dataframe by variable inside " ", then the output
+will show all of the data and the missing data will show NA.
+
+4.  **Left Join**
+
+```         
+# Computation Part
+df_L = left_join(df1, df2, by=" ")
+df_L
+```
+
+Explaination: Combine right table (df2) to the left table (df1) by
+variable inside " " from the left table (df1)
+
+5.  **Right Join**
+
+```         
+# Computation Part
+df_R = right_join(df1, df2, by=" ")
+df_R
+```
+
+Explaination: Combine left table (df1) to the right table (df2) by
+variable inside " " from the right table (df2).
+
+**Example:**
+
+```{r}
+# Input part
+df1=data.frame(CustomerId=c(1:6),Product=c("Oven","Television","Mobile","WashingMachine","Lightings","Ipad"),NumbProduct=c(10,5,16,2,22,7))
+df2=data.frame(CustomerId=c(2,4,6,7,8),State=c("California","Newyork","Santiago","Texas","Indiana"))
+```
+
+```{r}
+# Inner Join Function
+df_ij=inner_join(df1,df2,by="CustomerId") 
+df_ij
+```
+
+```{r}
+# Left Join using Inner Join
+df_ij2= df1 %>% inner_join(df2,by="CustomerId")
+df_ij2
+```
+
+```{r}
+# Outer Join
+df_U = full_join(df1,df2,by="CustomerId")
+df_U
+```
+
+```{r}
+# Left Join
+df_L = left_join(df1, df2, by="CustomerId")
+df_L
+```
+
+```{r}
+# Right Join
+df_R = right_join(df1, df2, by="CustomerId")
+df_R
+```
+
+6.  **Check Information of data**
+
+```{r}
+# Computation Part
+df_U %>% glimpse()
+glimpse(df_U)
+df1 %>% full_join(df2, by="CustomerId") %>% glimpse()
+```
+
+7.  **Check missing data for each column**
+
+```{r}
+results = apply(is.na(df_U),2,which)
+results
+
+results2 = apply(is.na(df_L),2,which)
+results2
+```
+
+Explainatuon : is.na to check missing value, 2 means we check the
+column. if we use 1, means we check the row
+
+8.  **Filter out the missing values by drop_na**
+
+```{r}
+df_UC = drop_na(df_U)
+df_UC
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
