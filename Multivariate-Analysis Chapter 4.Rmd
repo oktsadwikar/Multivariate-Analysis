@@ -51,7 +51,7 @@ data
 -   Cond. 3 =\> Multivariate normal: Assumed that each population is
     multivariate normal (Since the sample size n are large, based on the
     central limit theorem, we assumed that each population is
-    multivariate normal
+    multivariate normal.
 
 ## 1. The Computation for MANOVA test using function
 
