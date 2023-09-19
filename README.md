@@ -8,3 +8,6 @@ Repository for Multivariate Analysis, MSc in Applied Statistics, KKU 2023
 
 ### CHAPTER 1-3
 For code Chapter 1-3, it can be accessed through Multivariate-Analysis-Chapter-1-3.md
+
+### CHAPTER 4
+For code Chapter 1-3, it can be accessed through Multivariate_Analysis_Chapter_4.md
