@@ -1,0 +1,163 @@
+---
+title: "Chapter 2 Data Exploring and Normality"
+author: "Oktsa Dwika Rahmashari"
+date: '2023-10-20'
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# DATA EXPLORING AND NORMALITY TEST
+
+## **DATA EXPLORING**
+
+**Data Exploration by DataExplorer package**
+
+```{r}
+library('DataExplorer')
+```
+
+1.  **Importing data**
+
+```         
+# Import Data
+file = ''
+data = read.csv(file)
+```
+
+**Explaination :**
+
+file = ' ' is for the location of the data in the device.
+
+**Example:**
+
+```{r}
+data = read.csv("C:/Users/Avita/Documents/Multivariate-Analysis/Data/CreditApproval.csv", header = TRUE)
+
+head(data)
+```
+
+2.  **Check the information about the data**
+
+```{r}
+introduce(data)
+miss_val = apply(is.na(data),2,which)
+miss_val
+```
+
+3.  **Check the % of missing value for each variable**
+
+```{r}
+plot_missing(data)
+```
+
+4.  **Filter out the missing value**
+
+```{r}
+library('tidyr')
+dataC = drop_na(data)
+introduce(dataC)
+```
+
+5.  **Plotting the data**
+
+```         
+# Bar Plot
+plot_bar(data[,c()])
+
+# Scatter Plot
+plot_scatterplot(data[,c()],by ='var')
+
+# Histogram Plot
+plot_histogram(data$var)
+# or
+plot_histogram(data[,''])
+```
+
+**Example**
+
+```{r}
+# Bar Plot
+plot_bar(data[,c('A1','A4','A5')])
+
+# Scatter Plot
+plot_scatterplot(data[,c('A2','A3')],by ='A2')
+
+# Histogram Plot
+plot_histogram(data$A2)
+# or
+plot_histogram(data[,'A2'])
+```
+
+6.  **Descriptive Statistics for each variable**
+
+```{r}
+summary(data)
+```
+
+## **MULTIVARIATE NORMAL DISTRIUBUTION**
+
+### **A. Simulating Multivariate Normal Distribution**
+
+```{r}
+# Installing Packages
+library(MASS)
+library(ggplot2)
+library(MVN)
+```
+
+Here is the computation for simulating multivariate distribution
+
+```         
+# Input Part
+n = 
+mu = 
+sigma =
+tol =
+empirical =
+
+# Computation Part
+data = mvrnorm(n,mu,sigma)
+```
+
+**Explaination:**
+
+-   Ref:<https://www.rdocumentation.org/packages/rockchalk/versions/1.8.110/topics/mvrnorm>
+
+-   n =\> a number of samples.
+
+-   mu =\> a mean vector of variables. - sigma =\> a covariance matrix.
+
+**Example:**
+
+```{r}
+n = 10
+mu = c(0,0)
+sigma = matrix(c(10,3,3,2),2,2)
+sigma
+set.seed(1)
+data = mvrnorm(n,mu,sigma)
+data
+```
+
+### **B. Normality Test for multivariate variables using 'energy'**
+
+Test H0: data is multivariate normal distribution vs H1: data is not
+multivariate normal distribution For conclusion, we will reject H0 if
+p-value \< 0.05
+
+```{r}
+# computation part
+# using multivariate plot to show the chi-square Q-Q plot
+results = mvn(data, mvnTest = 'energy', multivariatePlot = 'qq') 
+results
+
+# using univariate plot
+results_U = mvn(data, mvnTest = 'energy', univariatePlot = 'qqplot')
+results_U
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```

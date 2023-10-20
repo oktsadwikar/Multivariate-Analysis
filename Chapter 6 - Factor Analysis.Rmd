@@ -1,0 +1,135 @@
+---
+title: "Chapter 6 Factor Analysis"
+author: "Oktsa Dwika Rahmashari"
+date: '2023-10-20'
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# FACTOR ANALYSIS
+
+## Install Packages
+
+Install the package 'psych' and 'GPArotation'
+
+```{r}
+library(psych)
+library(GPArotation)
+```
+
+## Input Part
+
+Import the data
+
+```{r}
+data = read.csv("C:/Users/Avita/Documents/Multivariate-Analysis/Data/EFA.csv",header=T)
+head(data)
+```
+
+## Computation Part
+
+### 1. Check Correlation
+
+Check the correlation among the features
+
+```{r}
+datcorr = cor(data) # Calculate the correlation matrix stored in a variable named “datcorr”
+datKMO =KMO(datcorr) #Calculate KMO statistics
+print(datKMO$MSA) # Display KM values
+```
+
+### 2. Check Independent (Barlett's Sphericity)
+
+Calculate Bartlett's Sphericity to check if the variables are
+independent
+
+```{r}
+datcorr = cor(data) # Calculate the correlation matrix stored in variable named “datcorr”
+datKMO =KMO(datcorr) # Calculate KMO statistics.
+n=90 # Specify the number of samples.
+datBart=cortest.bartlett(datcorr,n) # Calculate Bartlett's Sphericity statistic.
+print(datBart$p.value) # display p-value
+```
+
+**Hypothesis Testing**
+
+H0 :R=I (That is, the variables are not related to each other)
+
+p-value \< 0.05, then reject H0. So, the data is related to each other
+
+### 3. Compute Eigen Vector
+
+Compute the eigen value to select the suitable number of factors
+
+```{r}
+datEig = eigen(datcorr) #calculate the eigen value
+datEigmean = mean(datEig$values) #calculate mean of eigen value
+print(datEigmean)
+datEig$values>=1
+numfac = sum(datEig$values>=1) #select eigen value that greater than mean of eigen value (1)
+print(numfac)
+```
+
+From the output, it can be seen that the number of factors is equal to
+5.
+
+### 4. Apply Factor based on PCA
+
+Apply the factor based on PCA
+
+```{r}
+datFa = principal(datcorr,nfactors=5,rotate="none")
+datFa
+```
+
+from the output, known that the for PC5 only has 1 variable. The goals
+for factor analysis is "grouping" thus we don't want that PC has only 1
+variable. So we reduce the number of factors
+
+```{r}
+datFa1 = principal(datcorr,nfactors=4,rotate="none")
+datFa1
+```
+
+```{r}
+summary(datFa1)
+```
+
+Rotate the pc because from the previous PC, product reviews is not about
+fincance like others features in pc1
+
+```{r}
+datFaVarMax = principal(datcorr,nfactors=4,rotate="varimax")
+datFaVarMax
+```
+
+now it make sense
+
+### Other Method for Factor Analysis
+
+There is other method that we can use to do factor analysis
+
+```{r}
+fa(datcorr,nfactors=4,rotate="varimax",fm="pa")
+```
+
+it shows that the results is the same when we use the fa fuction with fm
+= pa and rotate varimax
+
+**Try set other parameter**
+
+```{r}
+fa(datcorr,nfactors=4,rotate="varimax",fm="ml")
+```
+
+```{r}
+FA1=fa(datcorr,nfactors=3,rotate="varimax",fm="pa")
+FA1
+summary(FA1)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
