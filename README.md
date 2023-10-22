@@ -1,46 +1,69 @@
 # Multivariate-Analysis
+📝 Oktsa Dwika Rahmashari (665020043-6)
 Repository for Multivariate Analysis, MSc in Applied Statistics, KKU 2023
 
-## GUIDELINE
-1. The Codes are devided by each topic
+## 🐾GUIDELINE🐾
+1. The Codes are devided by each topic and written by R-Markdown
 2. All the datasets are uploaded in the directory "Data"
-3. More details below
+3. All R-code can be downloaded in the directory "R-Script"
+4. All R-code can be seen in GitHub through following details:
 
-### CHAPTER 1 - Introduction of Multivariate Analysis in R
+---
+### ✨ CHAPTER 1 - Introduction of Multivariate Analysis in R ✨
+**Click ->** [Chapter 1](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-1---Introduction-in-Multivariate-Analysis.md)
+
 Chapter 1 explains about the introduction of multivariate analysis in R, like import package, calling the data, and data manipulation.
-Chapter 1 can be accessed through: Chapter-1---Introduction-in-Multivariate-Analysis.md
-and the R-script can be downloaded through: Chapter 1 - Introduction in Multivariate Analysis.Rmd
 
-### CHAPTER 2 - Data Exploration and Normality Test.Rmd
-Chapter 2 explains about data exploration like check missing value and how to handle it in R, and multivariate normality test in R
-Chapter 2 can be accessed through: Chapter-2---Data-Exploration-and-Normality-Test.md
-and the R-script can be downloaded through: Chapter 2 - Data Exploration and Normality Test.Rmd
+---
 
-### CHAPTER 3 - Multivariate Analysis for Compare Means
-Chapter 3 explains about Multivariate Analysis for Compare Means:
-1. One sample population
-2. 2 sample population
-Chapter 3 can be accessed through: Chapter-3---Multivariate-Analysis-for-Compare-Means.md
-and the R-script can be downloaded through: Chapter 3 - Multivariate Analysis for Compare Means.Rmd
 
-### CHAPTER 3 - MANOVA
-Chapter 4 explains about MANOVA
-Chapter 4 can be accessed through: Chapter-4---MANOVA.md
-and the R-script can be downloaded through: Chapter 4 - MANOVA.Rmd
+### ✨ CHAPTER 2 - Data Exploration and Normality Test ✨
+  **Click ->** [Chapter 2](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-2---Data-Exploration-and-Normality-Test.md)
 
-### CHAPTER 5 - Principle Component Analysis
-Chapter 5 explains about Principle Component Analysis or PCA.
-Chapter 5 can be accessed through: Chapter-1---Introduction-in-Multivariate-Analysis.md
-and the R-script can be downloaded through: Chapter 5 - PCA.Rmd
+  Chapter 2 explains about data exploration like check missing value, plots, and multivariate normality test in R
 
-### CHAPTER 6 - Factor Analysis
-Chapter 1 explains about Factor Analysis
-Chapter 1 can be accessed through: Chapter-6---Factor-Analysis.md
-and the R-script can be downloaded through: Chapter 6 - Factor Analysis.Rmd
+---
 
-## FINAL EXAMINATION
-### FINAL EXAMINATION GROUP
-This section explain about Classification using Discriminant Analysis and Regression Logistic
+### ✨ CHAPTER 3 - Multivariate Analysis for Compare Means ✨
+  **Click ->** [Chapter 3](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-3---Multivariate-Analysis-for-Compare-Means.md)
 
-### FINAL EXAMINATION INDIVIDUAL
-This section explain about Classification using Discriminant Analysis and Regression Logistic and applying PCA.
+  Chapter 3 explains about Multivariate Analysis for Compare Means:
+  1. One sample population
+  2. Two sample population
+
+---
+
+### ✨ CHAPTER 4 - MANOVA ✨
+  **Click ->** [Chapter 4](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-4---MANOVA.md)
+
+  Chapter 4 explains about MANOVA or compare means for more than two groups/populations
+
+---
+
+### ✨ CHAPTER 5 - Principle Component Analysis ✨
+  **Click ->** [Chapter 5](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-5---PCA.md)
+
+  Chapter 5 explains about Principle Component Analysis or PCA.
+
+---
+
+### ✨ CHAPTER 6 - Factor Analysis ✨
+  **Click ->** [Chapter 6](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-6---Factor-Analysis.md)
+  Chapter 6 explains about Factor Analysis
+
+
+***
+## 💥 FINAL EXAMINATION 💥
+### INDIVIDUALFINAL EXAMINATION
+  **Click ->** [Individual Final Examination](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Individual-Final-Examination.md)
+
+  This section explain about Classification using Discriminant Analysis and Logistic Regression Analysis.
+
+  Then compare the analysis using PCA, so there are 4 analysis:
+  * Discriminant Analysis without PCA
+  * Discriminant Analysis with PCA
+  * Logistic Regression without PCA
+  * Logistic Regression with PCA
+
+**Thank You 🙌**
+
