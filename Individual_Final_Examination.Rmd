@@ -1,0 +1,864 @@
+---
+title: "FINAL EXAMINATION INDIVIDUAL"
+author: "Oktsa Dwika Rahmashari"
+date: '2023-10-20'
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# FINAL EXAMINATION INDIVIDUAL
+
+**Description**
+
+1.  Application of Discriminant Analysis with PCA and without PCA
+
+2.  Application of Logistic Regression with PCA and without PCA
+
+For these application, I will use **Wine Quality Red Variants Data**,
+the datasets are related to red variants of the Portuguese "Vinho Verde"
+wine.
+
+Source: <https://archive.ics.uci.edu/dataset/186/wine+quality>
+
+# I. Data Pre-processing
+
+## 1.1 Import the data
+
+```{r}
+library('DataExplorer')
+```
+
+```{r}
+file ='D:/KKU/COURSE/1ST SEM/MULTIVARIATE ANALYSIS/FINAL EXAMINATION/Individual/winequality_red.csv'
+data = read.csv(file,sep=';')
+head(data)
+```
+
+## 1.2 Encoding Quality
+
+In this case, I use Quality as Classes or Labels. The quality will be
+divided into 2 classes, quality value that less than or equal to 5
+indicates bad wine and quality value greater than 5 indicates good wine.
+Then re-code bad wine as 0 and good wine as 1.
+
+```{r}
+data$quality <- ifelse(data$quality > 5,"good","bad")
+
+
+head(data)
+```
+
+## 1.3 Exploring the data
+
+```{r}
+introduce(data)
+```
+
+Based on the output, we know that the data contains of 12 features and
+1599 records with no missing value. There are 11 features as predictor
+and 1 features as target or classes (quality).
+
+**Check Missing Value**
+
+```{r}
+miss_val = apply(is.na(data),2,which)
+miss_val
+```
+
+From the output above, we know that there is no missing value in the
+data.
+
+**Descriptive Statistics**
+
+```{r}
+summary(data)
+```
+
+Output above shows the descriptive statistics of the data.
+
+-   fixed.acidity has mean value 8.32, minimum value 4.60, and maximum
+    value 15.90.
+
+-   volatile.acidity has mean value 0.5200, minimum value 0.1200, and
+    maximum value 1.5800.
+
+-   citric.acid has mean value 0.271, minimum value 0, and maximum value
+    1.
+
+-   residual.sugar has mean value 2.539, minimum value 0.900, and
+    maximum value 15.500.
+
+-   chlorides has mean value 0.08747, minimum value 0.01200, and maximum
+    value 0.61100.
+
+-   free.sulfur.dioxide has mean value 15.87, minimum value 1, and
+    maximum value 72.
+
+-   total.sulfur.dioxide has mean value 46.47, minimum value 6, and
+    maximum value 289.
+
+-   density has mean value 0.9967, minimum value 0.9901, and maximum
+    value 1.0037.
+
+-   pH has mean value 3.311, minimum value 2.740, and maximum value
+    4.010
+
+-   sulphates has mean value 0.6581, minimum value 0.3300, and maximum
+    value 2.0000.
+
+-   alchohol has mean value 10.42, minimum value 8.40, and maximum value
+    14.90.
+
+## 1.4 Split the data into Train data and Test data
+
+Let 80% of the data be a train data and 20% of the data be a test data.
+
+```{r}
+### Split data into training (80%) and test (20%) data
+
+set.seed(100)
+library(tidyverse)
+library(caret)
+theme_set(theme_classic())
+
+#### Train data
+training_samples = data$quality %>% createDataPartition (p=0.8, list=FALSE)
+train_data = data[training_samples,]
+
+#### Test data
+test_data = data[-training_samples,]
+```
+
+**Train data**
+
+```{r}
+introduce(train_data)
+```
+
+The train data consists of 1280 records.
+
+Then split the train data based on the predictor variable and target
+variable.
+
+```{r}
+x_train = train_data[,1:11]
+y_train = train_data[,12]
+```
+
+```{r}
+head(x_train)
+head(y_train)
+```
+
+**Test data**
+
+```{r}
+introduce(test_data)
+```
+
+The test data consists of 319 records.
+
+Then split the test data based on the predictor variable and target
+variable.
+
+```{r}
+x_test = test_data[,1:11]
+y_test = test_data[,12]
+
+head(x_test)
+head(y_test)
+```
+
+# II. PCA
+
+## 2.1 Check Correlation
+
+```{r}
+pairs(x_train, pch = 19, lower.panel = NULL)
+```
+
+Two variables have linear correlation if we can draw a diagonal line in
+the graph. From the output, we can see some of pairs have linear
+correlation, such as density and fixed.acidity have positive
+correlation, citric.acid and fixed.acidity have positive correlation, pH
+and fixed.acidity have negative correlation, and etc.
+
+## 2.2 Apply PCA
+
+```{r}
+res.pca = prcomp(x_train,scale=TRUE)
+```
+
+Build the principle components using all predictor features of the train
+data.
+
+### 2.2.1 Summary
+
+```{r}
+summary(res.pca)
+```
+
+The output above show the standard deviation, proportion of variance,
+and cumulative proportion of each Principle Components. There are 11 PC
+for this data because we have 11 predictor features.
+
+### 2.2.2 Eigen Vector
+
+```{r}
+res.pca$rotation
+```
+
+Output above shows the Eigen Vector between the PC and original
+Features.
+
+### 2.2.3 Eigen Value
+
+```{r}
+eigen_value = (res.pca$sdev)^2
+eigen_value
+```
+
+```{r}
+sum(eigen_value)
+```
+
+Output above shows the Eigen Value of the PC and the summation of the
+eigen value is equal to the number of features, which has 11 features.
+
+## 2.3 Correlation Circle
+
+```{r}
+library("factoextra")
+var = get_pca_var(res.pca)
+var
+```
+
+```{r}
+fviz_pca_var(res.pca,col.var = "cos2",              
+             gradient.cols = c("#00AFBB","#E7B800","#FC4E07"),             
+             repel = TRUE #avoid text overlapping             
+)
+```
+
+From the correlation circle of variable and PC, we know that pH is good
+represented by PC1. Sulphates, fixed.acidity, citric.acid, density,
+chlorides, and volatile.acidity are quite good represented by PC1.
+Alcohol, residual.sugar, free.sulfur.dioxide, and total.sulfur.dioxide
+are quire good represented by PC2
+
+## 2.4 Correlation plot
+
+```{r}
+library("corrplot") 
+corrplot(var$cos2, is.corr = FALSE, col = colorRampPalette(c("darkred","white","darkblue"))(100))
+```
+
+From the correlation plot, we know that
+
+-   fixed.acidity, citric.acid, density, and pH are quite good
+    represented by PC1
+
+-   free.sulfur.dioxide and total.sulfur.dioxide are quite good
+    represented by PC2
+
+-   volatile.acidity and alcohol are quite good represented by PC3
+
+-   chlorides and sulphates are quite good represented by PC4
+
+-   residual.sugar is quite good represented by PC5
+
+## 2.5 Selecting PC
+
+Using mean of Eigen Value
+
+```{r}
+res_eig = get_eigenvalue(res.pca)
+mean(res_eig$eigenvalue)
+```
+
+The mean of Eigen Value is 1. So, we will choose PC with Eigen Value is
+greater than 1.
+
+```{r}
+res_eig$eigenvalue >= 1
+```
+
+### 2.5.1 Conclusion of Selecting PC
+
+Since, PC1, PC2, PC3, and PC4 have eigen value greater than 1, then we
+select PC1, PC2, PC3, and PC4 to be used in the Classification Analysis.
+
+# III. Discriminant Analysis
+
+Before doing the discriminant analysis, we should check the Assumptions.
+
+## 3.1 Assumption Checking
+
+### 3.1.1 Normality
+
+```{r}
+library(MVN)
+```
+
+```{r}
+results = mvn(data[,1:11],mvnTest = 'energy', multivariatePlot = 'qq')
+
+results
+```
+
+**Hypotheses :**
+
+H0 = data normally distributed
+
+H1 = data is not normally distributed
+
+**Significant Level**
+
+alpha = 0.05
+
+**Comparison**
+
+Reject H0 if p-value \< alpha
+
+**Conclusion:**
+
+Since p-value is less than 0.05, then reject H0. So we can conclude that
+data is not multivariate normal distribution. ***But, for this case I
+assumed that data is normally distributed*** because the data has large
+size (n\>30) and using Central Limit Theorem, we can assume that the
+data is normally distributed.
+
+### 3.1.2 Equality of Variance
+
+```{r}
+library("biotools")
+```
+
+```{r}
+boxM(data[,1:11],data[,12])
+```
+
+**Hypotheses**
+
+H0 : Cov matrix of bad quality wine = Cov matrix of good quality wine
+
+H1 : Cov matrix of bad quality wine != Cov matrix of good quality wine
+
+**Significant Level**
+
+alpha = 0.05
+
+**Comparison**
+
+Reject H0 if p-value \< alpha
+
+**Conclusion**
+
+Since p-value \< 0.05, then reject H0. So we can conclude that
+Covariance matrix of bad wine quality and good wine quality are not
+equal.
+
+So, we will use **Quadratic discriminant analysis** (**QDA**)
+
+## 3.2 Discriminant Analysis without PCA
+
+**Quadratic discriminant analysis** (**QDA**)
+
+```{r}
+library(MASS)
+Model_QDA = qda(quality~., train_data)
+Model_QDA
+```
+
+**Prior probabilities of group:** These represent the proportions of
+each quality in the training set. From the output, we know that 53.4% of
+all records in training set were good quality wine and 46.6% of all
+records in training set were bad quality wine
+
+**Group means:** These display the mean values for each predictor
+variable for each quality.
+
+## 3.3 Discriminant Analysis with PCA
+
+### 3.3.1 Prepare the PC value
+
+```{r}
+train_pcs = as.data.frame(res.pca$x)
+head(train_pcs)
+```
+
+```{r}
+train_pcs = cbind(train_pcs[,1:4],y_train)
+colnames(train_pcs)[5] <- "quality" 
+head(train_pcs)
+```
+
+Based on PC selection in previous section, now we only have 4 variable
+predictors using Principle Components (PC1, PC2, PC3, and PC4) for QDA
+analysis.
+
+### **3.3.2 QDA with PCA**
+
+```{r}
+Model_QDA_PCA = qda(quality~., train_pcs)
+
+Model_QDA_PCA
+
+```
+
+From the output, we know that 53.4% of all records in training set were
+good quality wine and 46.6% of all records in training set were bad
+quality wine.
+
+## 3.4 Compare Discriminant Analysis with and without PCA
+
+### 3.4.1 Predict Classes of Test Data using QDA without PCA
+
+First, we predict the wine quality for test data by using QDA model
+without PCA
+
+#### 3.4.1.1 Predicting Wine Quality
+
+```{r}
+predictions_QDA = predict(Model_QDA,x_test)
+head(predictions_QDA$class)
+```
+
+The output above shows the predicted wine quality of test data using QDA
+without PCA model. Then we make the confusion matrix and calculate the
+accuracy to know the performance of this model.
+
+#### 3.4.1.2 Accuracy of QDA without PCA
+
+```{r}
+confusionMatrix(predictions_QDA$class, as.factor(y_test))
+```
+
+The output shows the confusion matrix and statistics of QDA model
+without PCA. Based on the confusion matrix, we know that 88 records of
+bad quality wine were predicted correctly by the model, 26 records of
+good quality wine were wrongly predicted as bad quality wine, 60 records
+of bad quality wine were wrongly predicted as good quality wine, and 145
+records of good quality wine were predicted correctly by the model. The
+accuracy of QDA without PCA model is 0.7304 or 73%, this indicates that
+the model is moderately good to predict Wine Quality.
+
+### 3.4.2 Predict Classes of Test Data using QDA with PCA
+
+#### 3.4.2.1 Preparing Test PCA data
+
+```{r}
+Test_PCA = predict(res.pca, newdata = x_test)
+Test_PCA = data.frame(Test_PCA[,1:4])
+
+head(Test_PCA)
+introduce(Test_PCA)
+```
+
+First, we prepare the predicted Principle Components value for test data
+based on the Principle Component Analysis of train data. Thus, we use
+this predicted Principle Components value of test data to do the
+Quadratic discriminant analysis with Principle Component Analysis.
+
+#### 3.4.2.2 Predict Classes QDA with PCA
+
+```{r}
+predictions_QDA_PCA = predict(Model_QDA_PCA,Test_PCA)
+head(predictions_QDA_PCA$class)
+```
+
+#### 3.4.2.3 Accuracy of QDA with PCA
+
+```{r}
+confusionMatrix(predictions_QDA_PCA$class, as.factor(y_test))
+```
+
+The output shows the confusion matrix and statistics of QDA model with
+PCA. Based on the confusion matrix, we know that 104 records of bad
+quality wine were predicted correctly by the model, 39 records of good
+quality wine were wrongly predicted as bad quality wine, 44 records of
+bad quality wine were wrongly predicted as good quality wine, and 132
+records of good quality wine were predicted correctly by the model. The
+accuracy of QDA with PCA model is 0.7398 or 73.98%, this indicates that
+the model is moderately good to predict Wine Quality.
+
+### 3.4.3 Conclusion of Comparison of QDA models
+
+The accuracy of QDA model with PCA is greater than DQA model without
+PCA. Then we can conclude that between these two model, QDA model with
+PCA is the best model to predict Wine Quality.
+
+# IV. Logistic Regression
+
+In this case, I will only use full model regression without PCA for the
+classification because we want to compare it with logistic regression
+with PCA model.
+
+```{r}
+library(MASS)
+```
+
+## 4.1 Logistic Regression without PCA
+
+### 4.1.1 Build the Model
+
+```{r}
+train_data2 = train_data
+train_data2$quality = as.factor(train_data2$quality)
+```
+
+```{r}
+full_model = glm(quality~., data= train_data2, family = binomial)
+
+summary(full_model)
+```
+
+**Hypotheses**
+
+H0 : Intercept or Variable Predictor is not significant to the model
+
+H1 : Intercept or Variable Predictor is significant to the model
+
+**Comparisons**
+
+Reject H0 if p-value \< significance alpha
+
+**Conclusion**
+
+-   fixed.acidity, volatile.acidity, citric.acid, free.sulfur.dioxide,
+    total.sulfur.dioxide, sulphates, and alcohol are significant to the
+    model (p-value \< 0.05)
+
+-   intercept, residual.sugar, chlorides, density and pH are not
+    significant to the model (p-value \> 0.05)
+
+### 4.1.2 Goodness of Fit
+
+```{r}
+library(performance)
+performance_hosmer(full_model, n_bins = 8)
+```
+
+The null hypothesis for the Hosmer-Lemeshow Goodness of Fit test is that
+the model is a good fit of the data; the alternative hypothesis is that
+the model is not a good fit. Since p-value = 0.075 \> 0.05, then do not
+reject H0. We can conclude that the full model is a good fit for the
+data.
+
+### 4.1.3 Diagnostic Checking
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(broom)
+theme_set(theme_classic())
+```
+
+-   Linearity
+
+    ```{r}
+    mydata = train_data[,1:11] %>% dplyr :: select_if(is.numeric)
+
+    predictors = colnames(mydata)
+    predictors
+
+    probabilities_full = predict(full_model, train_data[,1:11], type = "response")
+    logit = log(probabilities_full/(1 - probabilities_full))
+    mydata1 = mydata %>% mutate(logit) %>% gather(key = "predictors", value = "predictors.value",-logit)
+
+    head(mydata1,10)
+
+    ggplot(mydata1, aes(logit,predictors.value)) + geom_point(size = 0.5, alpha = 0.5) + geom_smooth(method="loess") + theme_bw() + facet_wrap(~predictors,scales="free_y")
+    ```
+
+    Output above is the smoothed scatter plots between the numeric
+    features with the logit. It shows that variables some of features,
+    such as alcohol, sulphate and volatile.acidity are all quite
+    linearly associated with the quality outcome in logit scale.
+
+-   Influential Values
+
+    ```{r}
+    model_full_data = augment(full_model) %>% mutate(index=1:n())
+
+    model_full_data %>% top_n(3,.cooksd)
+
+    ggplot(model_full_data,aes(index,.std.resid)) + geom_point(aes(colour = quality),alpha = 5) + theme_bw()
+    ```
+
+    To check whether the data contains potential influential
+    observations, the standardized residual error can be inspected. Data
+    points with an absolute standardized residuals above 3 represent
+    possible outliers and may deserve closer attention. From the plot
+    above, it shows that there is no data points with an absolute
+    standardized residuals above 3. So, there is no influential
+    observations in the data.
+
+-   Multicolinearity
+
+    ```{r}
+    library(car)
+
+    vif(full_model)
+    ```
+
+    A VIF less than 5 indicates a low correlation of that predictor with
+    other predictors. A value between 5 and 10 indicates a moderate
+    correlation. By reading their score above, we see that fixed.acidity
+    and density, i.e. 7.87 and 5.91. Fortunately, such score is still
+    lower than 10. Therefore, in case of multicollinearity, our model
+    performs satisfactorily.
+
+## 4.2 Logistic Regression with PCA
+
+### 4.2.1 Build the Model
+
+```{r}
+train_pcs2 = train_pcs
+train_pcs2$quality = as.factor(train_pcs2$quality)
+```
+
+```{r}
+full_model_PCA = glm(quality~., data = train_pcs2, family = binomial)
+
+summary(full_model_PCA)
+```
+
+**Hypotheses**
+
+H0 : Intercept or Variable Predictor is not significant to the model
+
+H1 : Intercept or Variable Predictor is significant to the model
+
+**Comparisons**
+
+Reject H0 if p-value \< significance alpha
+
+**Conclusion**
+
+intercept, PC1, PC2, PC3, and PC4 are significant to the model (p-value
+\< 0.05)
+
+### 4.2.2 Goodness of Fit
+
+```{r}
+performance_hosmer(full_model_PCA, n_bins = 8)
+```
+
+The null hypothesis for the Hosmer-Lemeshow Goodness of Fit test is that
+the model is a good fit of the data; the alternative hypothesis is that
+the model is not a good fit. Since p-value = 0.060 \> 0.05, then do not
+reject H0. We can conclude that the logistic regression model with PCA
+is a good fit for the data.
+
+### 4.2.3 Diagnostic Checking
+
+-   Linearity
+
+    ```{r}
+    mydata = train_pcs[,1:4] %>% dplyr :: select_if(is.numeric)
+
+    predictors = colnames(mydata)
+    predictors
+
+    probabilities_full_PCA = predict(full_model_PCA, train_pcs[,1:4], type = "response")
+    logit_PCA = log(probabilities_full_PCA/(1 - probabilities_full_PCA))
+    mydata1 = mydata %>% mutate(logit_PCA) %>% gather(key = "predictors", value = "predictors.value",-logit_PCA)
+
+    head(mydata1,10)
+
+    ggplot(mydata1, aes(logit_PCA,predictors.value)) + geom_point(size = 0.5, alpha = 0.5) + geom_smooth(method="loess") + theme_bw() + facet_wrap(~predictors,scales="free_y")
+    ```
+
+    Output above is the smoothed scatter plots between the all principle
+    components with the logit. It shows that all principle components
+    (PC1, PC2, PC3, and PC4) are quite linearly associated with the
+    quality outcome in logit scale.
+
+-   Influential Values
+
+    ```{r}
+    model_full_data_PCA = augment(full_model_PCA) %>% mutate(index=1:n())
+
+    model_full_data_PCA %>% top_n(3,.cooksd)
+
+    ggplot(model_full_data_PCA,aes(index,.std.resid)) + geom_point(aes(color = quality),alpha = 5) + theme_bw()
+    ```
+
+    From the plot above, it shows that there is no data points with an
+    absolute standardized residuals above 3. So, there is no influential
+    observations in the data.
+
+-   Multicolinearity
+
+    ```{r}
+    vif(full_model_PCA)
+    ```
+
+    As a rule of thumb, a VIF value that exceeds 5 indicates a
+    problematic amount of collinearity. In our data, there is no
+    collinearity: all principle components have value of VIF below 5.
+
+## 4.3 Compare Logistic Regression with and without PCA
+
+### 4.3.1 Predict Classes of Test Data using Logistic Regression without PCA
+
+#### 4.3.1.1 Prediction of Probability
+
+```{r}
+prob_full = predict(full_model, x_test, type = "response")
+head(prob_full)
+```
+
+First, predict the probability of each records and we got the prediction
+of probability as shown at output above.
+
+#### 4.3.1.2 Predicted Class
+
+```{r}
+predicted_full = ifelse(prob_full > 0.5, "good", "bad")
+head(predicted_full)
+```
+
+Using the predicted probability, we set cut point as 0.5. Thus, for the
+predicted probability that greater than 0.5 then it belongs to the first
+class or good wine quality and for the predicted probability that less
+than or equal to 0.5 than it belongs to the zero class or bad wine
+quality.
+
+#### 4.3.1.3 Accuracy of Logistic Regression without PCA
+
+```{r}
+confusionMatrix(as.factor(predicted_full), as.factor(y_test))
+```
+
+The output shows the confusion matrix and statistics of Logistic
+Regression model without PCA. Based on the confusion matrix, we know
+that 105 records of bad quality wine were predicted correctly by the
+model, 32 records of good quality wine were wrongly predicted as bad
+quality wine, 43 records of bad quality wine were wrongly predicted as
+good quality wine, and 139 records of good quality wine were predicted
+correctly by the model. The accuracy of Logistic Regression without PCA
+model is 0.7649 or 76.5%, this indicates that the model is good to
+predict Wine Quality.
+
+### 4.3.2 Predict Classes of Test Data using Logistic Regression with PCA
+
+#### 4.3.2.1 Prediction of Probability
+
+```{r}
+prob_full_PCA = predict(full_model_PCA, Test_PCA, type = "response")
+head(prob_full_PCA)
+```
+
+First, predict the probability of each records using 4 principle
+components and we got the prediction of probability as shown at output
+above.
+
+#### 4.3.2.2 Predicted Class
+
+```{r}
+predicted_full_PCA = ifelse(prob_full_PCA > 0.5, "good", "bad")
+head(predicted_full_PCA)
+```
+
+Using the predicted probability, we set cut point as 0.5. Thus, for the
+predicted probability that greater than 0.5 then it belongs to the first
+class or good wine quality and for the predicted probability that less
+than or equal to 0.5 than it belongs to the zero class or bad wine
+quality.
+
+#### 4.3.2.3 Accuracy of Logistic Regression with PCA
+
+```{r}
+confusionMatrix(as.factor(predicted_full_PCA), as.factor(y_test))
+```
+
+The output shows the confusion matrix and statistics of Logistic
+Regression model with PCA. Based on the confusion matrix, we know that
+107 records of bad quality wine were predicted correctly by the model,
+43 records of good quality wine were wrongly predicted as bad quality
+wine, 41 records of bad quality wine were wrongly predicted as good
+quality wine, and 128 records of good quality wine were predicted
+correctly by the model. The accuracy of Logistic Regression with PCA
+model is 0.7367 or 73.67%, this indicates that the model is moderately
+good to predict Wine Quality.
+
+### 4.3.3 Conclusion of Comparison
+
+The accuracy of logistic regression model without PCA is greater than
+logistic regression model with PCA. Then we can conclude that between
+these two model, logistic regression model without PCA is the best model
+to predict Wine Quality.
+
+## 4.4 Explanation of Logistic Regression Model without PCA
+
+```{r}
+model.OR <- exp(full_model$coefficients)
+round(model.OR, 3)
+```
+
+Since logistic regression model without PCA better than logistic
+regression model with PCA, then calculate the odds ratio.
+
+-   The regression coefficient for fixed.acidity is 0.2297. This
+    indicates that one unit increase in the fixed.acidity will increase
+    the odds of being good wine quality by 1.258 times.
+
+-   The regression coefficient for volatile.acidity is -3.0363. This
+    indicates that one unit increase in the volatile.acidity will
+    increase the odds of being good wine quality by 0.048 times.
+
+-   The regression coefficient for citric.acid is -1.2946. This
+    indicates that one unit increase in the citric.acid will increase
+    the odds of being good wine quality by 0.274 times.
+
+-   The regression coefficient for residual.sugar is 0.0708. This
+    indicates that one unit increase in the residual.sugar will increase
+    the odds of being good wine quality by 1.073 times.
+
+-   The regression coefficient for chlorides is -3.2665. This indicates
+    that one unit increase in the chlorides will increase the odds of
+    being good wine quality by 0.038 times.
+
+-   The regression coefficient for free.sulfur.dioxide is 0.0277. This
+    indicates that one unit increase in the free.sulfur.dioxide will
+    increase the odds of being good wine quality by 0.102 times.
+
+-   The regression coefficient for total.sulfur.dioxide is -0.0168. This
+    indicates that one unit increase in the total.sulfur.dioxide will
+    increase the odds of being good wine quality by 0.983 times.
+
+-   The regression coefficient for density is -65.9052 and odd ratio is
+    0, it means that one unit increase in the density, the good wine
+    quality is less likely to occurs.
+
+-   The regression coefficient for pH is -0.1321. This indicates that
+    one unit increase in the pH will increase the odds of being good
+    wine quality by 0.876 times.
+
+-   The regression coefficient for sulphates is 2.5578. This indicates
+    that one unit increase in the sulphates will increase the odds of
+    being good wine quality by 1.291 times
+
+-   The regression coefficient for alcohol is 0.8715. This indicates
+    that one unit increase in the alcohol will increase the odds of
+    being good wine quality by 2.39 times
+
+# V. Conclusion
+
+Based on the analysis, we can conclude that by applying PCA in Quadratic
+Discriminant Analysis for Wine Quality can predict wine quality better
+than without applying PCA. However, for logistic regression analysis,
+model without applying PCA can predict wine quality better than the
+modal with PCA. If we compare Quadratic Discriminant Analysis with
+applying PCA and Logistic Regression without applying PCA, we can
+conclude that Logistic Regression without applying PCA can predict
+better than the Quadratic Discriminant Analysis, because the regression
+model has greater accuracy.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
