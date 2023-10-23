@@ -41,10 +41,10 @@ Chapter 1 explains about the introduction of multivariate analysis in R, like im
 
 ---
 
-### ✨ CHAPTER 5 - Principle Component Analysis ✨
+### ✨ CHAPTER 5 - Principal Component Analysis ✨
   **Click ->** [Chapter 5](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-5---PCA.md)
 
-  Chapter 5 explains about Principle Component Analysis or PCA.
+  Chapter 5 explains about Principal Component Analysis or PCA.
 
 ---
 
