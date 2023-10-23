@@ -337,7 +337,7 @@ head(y_test)
 
     ## [1] "bad"  "bad"  "good" "bad"  "good" "bad"
 
-# II. PRINCIPLE COMPONENTS ANALYSIS (PCA)
+# II. PRINCIPAL COMPONENTS ANALYSIS (PCA)
 
 ## 2.1 Check Correlation
 
@@ -359,7 +359,7 @@ and fixed.acidity have negative correlation, and etc.
 res.pca = prcomp(x_train,scale=TRUE)
 ```
 
-Build the principle components using all predictor features of the train
+Build the principal components using all predictor features of the train
 data.
 
 ### 2.2.1 Summary
@@ -379,7 +379,7 @@ summary(res.pca)
     ## Cumulative Proportion  0.94622 0.97776 0.99474 1.00000
 
 The output above show the standard deviation, proportion of variance,
-and cumulative proportion of each Principle Components. There are 11 PC
+and cumulative proportion of each principal Components. There are 11 PC
 for this data because we have 11 predictor features.
 
 ### 2.2.2 Eigen Vector
@@ -762,7 +762,7 @@ head(train_pcs)
     ## 9 -1.1152209 -0.2860186  1.5036149  0.01276791    good
 
 Based on PC selection in previous section, now we only have 4 variable
-predictors using Principle Components (PC1, PC2, PC3, and PC4) for QDA
+predictors using principal Components (PC1, PC2, PC3, and PC4) for QDA
 analysis.
 
 ### 3.3.2 QDA with PCA
@@ -881,10 +881,10 @@ introduce(Test_PCA)
     ##   total_missing_values complete_rows total_observations memory_usage
     ## 1                    0           319               1276        11912
 
-First, we prepare the predicted Principle Components value for test data
-based on the Principle Component Analysis of train data. Thus, we use
-this predicted Principle Components value of test data to do the
-Quadratic discriminant analysis with Principle Component Analysis.
+First, we prepare the predicted principal Components value for test data
+based on the principal Component Analysis of train data. Thus, we use
+this predicted principal Components value of test data to do the
+Quadratic discriminant analysis with principal Component Analysis.
 
 #### 3.4.2.2 Predict Classes QDA with PCA
 
@@ -1291,8 +1291,8 @@ is a good fit for the data.
 
   ![](Individual_Final_Examination_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
 
-  Output above is the smoothed scatter plots between the all principle
-  components with the logit. It shows that all principle components
+  Output above is the smoothed scatter plots between the all principal
+  components with the logit. It shows that all principal components
   (PC1, PC2, PC3, and PC4) are quite linearly associated with the
   quality outcome in logit scale.
 
@@ -1333,7 +1333,7 @@ is a good fit for the data.
 
   As a rule of thumb, a VIF value that exceeds 5 indicates a problematic
   amount of collinearity. In our data, there is no collinearity: all
-  principle components have value of VIF below 5.
+  principal components have value of VIF below 5.
 
 ## 4.3 Compare Logistic Regression with and without PCA
 
@@ -1424,7 +1424,7 @@ head(prob_full_PCA)
     ##         3         6         8        23        25        27 
     ## 0.2138973 0.2068856 0.3958713 0.5669419 0.4826116 0.5865617
 
-First, predict the probability of each records using 4 principle
+First, predict the probability of each records using 4 principal
 components and we got the prediction of probability as shown at output
 above.
 
