@@ -482,11 +482,11 @@ fviz_pca_var(res.pca,col.var = "cos2",
 The color indicates the value of correlation, orange means the variable
 is perfectly represented by the PCs because the cos2 is high, blue means
 the variable is not perfectly represented by the PCs because the cos2 is
-low. From the correlation circle of variable and PC, we know that pH is
-good represented by PC1. Sulphates, fixed.acidity, citric.acid, density,
-chlorides, and volatile.acidity are quite good represented by PC1.
-Alcohol, residual.sugar, free.sulfur.dioxide, and total.sulfur.dioxide
-are quire good represented by PC2
+low.From the correlation circle of variable and PC, we know that pH is
+good represented by PC1. Sulphates, fixed.acidity, citric.acid,
+density,chlorides, and volatile.acidity are quite good represented by
+PC1.Alcohol, residual.sugar, free.sulfur.dioxide, and
+total.sulfur.dioxide are quire good represented by PC2
 
 ## 2.4 Correlation plot
 
@@ -765,7 +765,7 @@ Based on PC selection in previous section, now we only have 4 variable
 predictors using Principle Components (PC1, PC2, PC3, and PC4) for QDA
 analysis.
 
-### **3.3.2 QDA with PCA**
+### 3.3.2 QDA with PCA
 
 ``` r
 Model_QDA_PCA = qda(quality~., train_pcs)

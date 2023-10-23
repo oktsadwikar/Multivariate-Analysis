@@ -38,17 +38,10 @@ head(data)
 
 ## 1.2 Encoding Quality
 
-<<<<<<< HEAD
 In this case, I use Quality as Classes or Labels, the score of wine
 quality is between 0 and 10. Thus, the quality will be divided into 2
 classes, quality value that less than or equal to 5 indicates bad wine
 and quality value greater than 5 indicates good wine.
-=======
-In this case, I use Quality as Classes or Labels. The quality will be
-divided into 2 classes, quality value that less than or equal to 5
-indicates bad wine and quality value greater than 5 indicates good wine.
-Then re-code bad wine as 0 and good wine as 1.
->>>>>>> 29df246e4118621950bd333ad55f024b660d7e09
 
 ```{r}
 data$quality <- ifelse(data$quality > 5,"good","bad")
@@ -92,10 +85,6 @@ Output above shows the descriptive statistics of the data.
     maximum value 1.5800.
 
 -   citric.acid has mean value 0.271, minimum value 0, and maximum value
-<<<<<<< HEAD
-=======
-    1.
->>>>>>> 29df246e4118621950bd333ad55f024b660d7e09
 
 -   residual.sugar has mean value 2.539, minimum value 0.900, and
     maximum value 15.500.
@@ -181,11 +170,7 @@ head(x_test)
 head(y_test)
 ```
 
-<<<<<<< HEAD
 # II. PRINCIPLE COMPONENTS ANALYSIS (PCA)
-=======
-# II. PCA
->>>>>>> 29df246e4118621950bd333ad55f024b660d7e09
 
 ## 2.1 Check Correlation
 
@@ -256,19 +241,14 @@ fviz_pca_var(res.pca,col.var = "cos2",
 )
 ```
 
-<<<<<<< HEAD
 The color indicates the value of correlation, orange means the variable
 is perfectly represented by the PCs because the cos2 is high, blue means
 the variable is not perfectly represented by the PCs because the cos2 is
-low. From the correlation circle of variable and PC, we know that pH is
-good represented by PC1. Sulphates, fixed.acidity, citric.acid, density,
-=======
-From the correlation circle of variable and PC, we know that pH is good
-represented by PC1. Sulphates, fixed.acidity, citric.acid, density,
->>>>>>> 29df246e4118621950bd333ad55f024b660d7e09
-chlorides, and volatile.acidity are quite good represented by PC1.
-Alcohol, residual.sugar, free.sulfur.dioxide, and total.sulfur.dioxide
-are quire good represented by PC2
+low.From the correlation circle of variable and PC, we know that pH is
+good represented by PC1. Sulphates, fixed.acidity, citric.acid,
+density,chlorides, and volatile.acidity are quite good represented by
+PC1.Alcohol, residual.sugar, free.sulfur.dioxide, and
+total.sulfur.dioxide are quire good represented by PC2
 
 ## 2.4 Correlation plot
 
@@ -421,7 +401,7 @@ Based on PC selection in previous section, now we only have 4 variable
 predictors using Principle Components (PC1, PC2, PC3, and PC4) for QDA
 analysis.
 
-### **3.3.2 QDA with PCA**
+### 3.3.2 QDA with PCA
 
 ```{r}
 Model_QDA_PCA = qda(quality~., train_pcs)
