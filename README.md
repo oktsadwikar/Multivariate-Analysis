@@ -50,13 +50,14 @@ Chapter 1 explains about the introduction of multivariate analysis in R, like im
 
 ### ✨ CHAPTER 6 - Factor Analysis ✨
   **Click ->** [Chapter 6](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Chapter-6---Factor-Analysis.md)
+ 
   Chapter 6 explains about Factor Analysis
 
 
 ***
 ## 💥 FINAL EXAMINATION 💥
 ### INDIVIDUALFINAL EXAMINATION
-  **Click ->** [Individual Final Examination](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Individual-Final-Examination.md)
+  **Click ->** [Individual Final Examination](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Individual_Final_Examination.md)
 
   This section explain about Classification using Discriminant Analysis and Logistic Regression Analysis.
 
