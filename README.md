@@ -5,8 +5,8 @@ Repository for Multivariate Analysis, MSc in Applied Statistics, KKU 2023
 
 ## 🐾GUIDELINE🐾
 1. The Codes are devided by each topic and written by R-Markdown
-2. All the datasets are uploaded in the directory "Data"
-3. All R-code can be downloaded in the directory "R-Script"
+2. All the datasets are uploaded in the directory ["Data"](https://github.com/oktsadwikar/Multivariate-Analysis/tree/main/Data)
+3. All R-code can be downloaded in the directory ["R-Script"](https://github.com/oktsadwikar/Multivariate-Analysis/tree/main/R-Script)
 4. All R-code can be seen in GitHub through following details:
 
 ---
