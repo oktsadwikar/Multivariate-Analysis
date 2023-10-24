@@ -1,6 +1,10 @@
 ---
 title: "FINAL EXAMINATION GROUP"
+<<<<<<< HEAD
+author: "Arex, Pai, Oktsa"
+=======
 author: "Oktsa Dwika Rahmashari"
+>>>>>>> 2577bfa474a3646408c2571bb61bc2894b8f1c88
 date: '2023-10-24'
 output: github_document
 editor_options: 
