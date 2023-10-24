@@ -1,0 +1,320 @@
+---
+title: "FINAL EXAMINATION GROUP"
+author: "Oktsa Dwika Rahmashari"
+date: '2023-10-24'
+output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# APPLICATION OF DISCRIMINANT ANALYSIS
+##import the data
+```{r}
+url = 'http://www.biz.uiowa.edu/faculty/jledolter/DataMining/admission.csv' 
+admit = read.csv(url)
+```
+
+##	Explore the dataset
+```{r}
+head(admit)
+summary(admit)
+```
+
+##Assumption of Normality
+```{r}
+library(MVN)
+par(mar = c(1, 1, 1, 1))
+
+results = mvn(admit[,1:2],mvnTest = 'energy', multivariatePlot = 'qq') 
+results
+```
+
+
+##Assumption of Equal Variance - Covariance matrices
+```{r}
+library("biotools")
+boxM(admit[ ,1:2],admit$De)
+```
+
+##Split the Data into Training Set(80%) and Test Set(20%)
+```{r}
+library(tidyverse)
+library(caret)
+set.seed(123)
+training.samples <- admit$De %>% createDataPartition(p = 0.8, list = FALSE)
+
+train.data <- admit[training.samples, ]
+head(train.data)
+
+test.data <- admit[-training.samples, ]
+head(test.data)
+
+
+library('DataExplorer')
+introduce(train.data)
+
+introduce(test.data)
+
+ggplot(data = train.data)+
+  geom_point(aes(GPA, GMAT, color = De))
+
+ggplot(data = test.data)+
+  geom_point(aes(GPA, GMAT, color = De))
+```
+
+##Linear Discriminant Analysis  (LDA Model)
+```{r}
+model_LDA <- lda(De~., admit)
+model_LDA
+```
+
+##Prediction class
+```{r}
+predictions <- model_LDA %>% predict(test.data)
+predictions$class
+```
+
+##Model accuracy
+```{r}
+mean(predictions$class==test.data$De)
+```
+
+##Adding predictions$class
+```{r}
+test.data$De_lda_predi = as.character(predictions$class)
+head(test.data)
+```
+
+##Adding actual class, predicted class
+```{r}
+test.data$De_actual_predi = paste(test.data$De, test.data$De_lda_predi, sep=",")
+head(test.data)
+```
+
+##plot LDA
+```{r}
+ggplot(data = test.data)+
+  geom_point(aes(GPA, GMAT, color = De_actual_predi))
+```
+
+###Quadratic Discriminant Analysis (QDA)
+```{r}
+library(MASS)
+Model_QDA = qda(De~., train.data)
+Model_QDA
+```
+
+##Prediction class
+```{r}
+predictions = Model_QDA %>% predict(test.data)
+predictions$class
+```
+
+##Model accuracy
+```{r}
+mean(predictions$class==test.data$De)
+```
+
+##Adding predictions$class
+```{r}
+test.data$De_QDA_predi = as.character(predictions$class)
+head(test.data)
+```
+
+#Adding actual class, predicted class
+```{r}
+test.data$De_actual_predi = paste(test.data$De, test.data$De_QDA_predi, sep=",")
+head(test.data)
+```
+
+##plot QDA
+```{r}
+ggplot(data = test.data)+
+  geom_point(aes(GPA, GMAT, color = De_actual_predi))
+```
+
+# APPLICATION OF LOGISTIC REGRESSION
+## PREPARING THE DATA
+### Import Data
+```{r}
+library(mlbench)
+data(PimaIndiansDiabetes2)
+PID2 = PimaIndiansDiabetes2
+head(PID2)
+```
+
+### Check Missing Value
+```{r}
+library('DataExplorer')
+introduce(PID2)
+```
+
+### Drop Missing Value
+```{r}
+library(tidyverse)
+PID2 = drop_na(PID2)
+introduce(PID2)
+```
+
+### Exploring Data - Descriptive Statistics
+```{r}
+summary(PID2)
+```
+
+### Split data into training (80%) and test (20%) data
+```{r}
+set.seed(123)
+library(caret)
+theme_set(theme_classic())
+```
+
+#### Training data
+```{r}
+training_samples = PID2$diabetes %>% createDataPartition (p=0.8, list=FALSE)
+train_data = PID2[training_samples,]
+head(train_data)
+introduce(train_data)
+```
+
+#### Test data
+```{r}
+test_data = PID2[-training_samples,]
+head(test_data)
+introduce(test_data)
+```
+
+## LOGISTIC REGRESSION - FULL MODEL
+```{r}
+library(MASS)
+full_model = glm(diabetes ~., data= train_data, family = binomial)
+
+summary(full_model)
+```
+
+## LOGISTIC REGRESSION - STEPWISE MODEL
+```{r}
+stepwise_model = glm(diabetes ~., data= train_data, family = binomial) %>% stepAIC(trace = FALSE)
+
+summary(stepwise_model)
+```
+
+There are 2 variable that donot reject H0 then we would to do one more model
+
+## LOGISTIC REGRESSION - NEW MODEL
+```{r}
+New_model = glm(diabetes ~glucose+mass+pedigree, data= train_data, family = binomial)
+
+summary(New_model)
+```
+
+## COMPARE FULL, STEPWISE ,NEW MODEL
+### Full Model
+#### Prediction of Probability
+```{r}
+prob_full = predict(full_model, test_data, type = "response")
+head(prob_full)
+```
+
+#### Predicted Class
+```{r}
+predicted_full = ifelse(prob_full > 0.5, "pos", "neg")
+predicted_full
+```
+
+#### Accuracy
+```{r}
+mean(predicted_full == test_data$diabetes)
+```
+
+### Stepwise Model
+#### Prediction of Probability
+```{r}
+prob_stepwise = predict(stepwise_model, test_data, type = "response")
+head(prob_stepwise)
+```
+
+#### Predicted Class
+```{r}
+predicted_stepwise = ifelse(prob_stepwise > 0.5, "pos", "neg")
+predicted_stepwise
+```
+
+#### Accuracy
+```{r}
+mean(predicted_stepwise == test_data$diabetes)
+```
+
+### NEW Model
+#### Prediction of Probability
+```{r}
+prob_New = predict(New_model, test_data, type = "response")
+head(prob_New)
+```
+
+#### Predicted Class
+```{r}
+predicted_New = ifelse(prob_New > 0.5, "pos", "neg")
+predicted_New
+```
+
+#### Accuracy
+```{r}
+mean(predicted_New == test_data$diabetes)
+```
+
+Best Model is stepwise model
+
+### Goodness of Fit (stepwise model)
+```{r}
+library(performance)
+performance_hosmer(stepwise_model, n_bins = 10)
+```
+
+### Assumption and Diagnostic Checking (stepwise model)
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(broom)
+theme_set(theme_classic())
+```
+
+#### Linearity
+```{r}
+mydata = train_data %>% dplyr :: select_if(is.numeric)
+
+probabilities_stepwise = predict(stepwise_model, train_data, type = "response")
+logit_sw = log(probabilities_stepwise/(1 - probabilities_stepwise))
+mydata2 = mydata %>% mutate(logit_sw) %>% gather(key = "predictors", value = "predictors.value",-logit_sw)
+
+head(mydata2,10)
+
+ggplot(mydata2, aes(logit_sw,predictors.value)) + geom_point(size = 0.5, alpha = 0.5) + geom_smooth(method="loess") + theme_bw() + facet_wrap(~predictors,scales="free_y")
+```
+
+#### Influential Values (stepwise model)
+```{r}
+model_sw_data = augment(stepwise_model) %>% mutate(index=1:n())
+
+model_sw_data %>% top_n(3,.cooksd)
+
+ggplot(model_sw_data,aes(index,.std.resid)) + geom_point(aes(color = diabetes),alpha = 5) + theme_bw()
+```
+
+#### Multicolinearity (stepwise model)
+```{r}
+library(car)
+vif(stepwise_model)
+```
+
+## ODD RATIO (stepwise model)
+```{r}
+model.OR <- exp(stepwise_model$coefficients)
+round(model.OR, 3)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
