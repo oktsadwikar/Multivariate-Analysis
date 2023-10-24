@@ -1,6 +1,6 @@
 FINAL EXAMINATION GROUP
 ================
-Oktsa Dwika Rahmashari
+Arex, Pai, Oktsa
 2023-10-24
 
 # APPLICATION OF DISCRIMINANT ANALYSIS
@@ -60,7 +60,7 @@ results
 
     ## $multivariateNormality
     ##          Test Statistic p value MVN
-    ## 1 E-statistic  1.053846    0.02  NO
+    ## 1 E-statistic  1.053846   0.029  NO
     ## 
     ## $univariateNormality
     ##               Test  Variable Statistic   p value Normality
