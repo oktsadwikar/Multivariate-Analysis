@@ -56,12 +56,15 @@ Chapter 1 explains about the introduction of multivariate analysis in R, like im
 
 ***
 ## 💥 FINAL EXAMINATION 💥
-### INDIVIDUALFINAL EXAMINATION
+### GROUP FINAL EXAMINATION
+  **Click ->** [Group Final Examination](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/GROUP-FINAL-EXAMINATION.md)
+  
+  This report explain about Classification using Discriminant Analysis and Logistic Regression Analysis.
+    
+### INDIVIDUAL FINAL EXAMINATION
   **Click ->** [Individual Final Examination](https://github.com/oktsadwikar/Multivariate-Analysis/blob/main/Individual_Final_Examination.md)
 
-  This section explain about Classification using Discriminant Analysis and Logistic Regression Analysis.
-
-  Then compare the analysis using PCA, so there are 4 analysis:
+  This is the continuation of the Group Project. Compare the analysis using PCA, so there are 4 analysis:
   * Discriminant Analysis without PCA
   * Discriminant Analysis with PCA
   * Logistic Regression without PCA
